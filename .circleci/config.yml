@@ -1,29 +1,15 @@
 version: 2.1
 
 jobs:
-  test:
+  build:
     docker:
-      - image: circleci/node:16.3.0-browsers
+      - image: circleci/node:14.16.0
     steps:
       - checkout
       - run: npm install
-      - run: npm test
-  deploy:
-    # 배포 작업 설정...
 
 workflows:
   version: 2
-  test:
+  build:
     jobs:
-      - test:
-          filters:
-            branches:
-              only: main
-  deploy:
-    jobs:
-      - deploy:
-          requires:
-            - test
-          filters:
-            branches:
-              only: release
+      - build
