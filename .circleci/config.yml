@@ -3,13 +3,53 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/node:14.16.0
+      - image: circleci/node:16.3.0-browsers
     steps:
       - checkout
       - run: npm install
+      - run: npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .next/
+
+  test:
+    docker:
+      - image: circleci/node:16.3.0-browsers
+    steps:
+      - attach_workspace:
+          at: .
+      - run: npm test
+
+  deploy:
+    docker:
+      - image: docker:19.03.12
+    steps:
+      - attach_workspace:
+          at: .
+      - setup_remote_docker
+      - run: docker build -t my-image .
+      - run: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+      - run: docker tag my-image $DOCKERHUB_USERNAME/my-image:latest
+      - run: docker push $DOCKERHUB_USERNAME/my-image:latest
 
 workflows:
   version: 2
-  build:
+  build_and_test:
     jobs:
       - build
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main
+
+  deploy:
+    jobs:
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: release
