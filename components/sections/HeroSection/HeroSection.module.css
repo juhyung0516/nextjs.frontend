@@ -1,0 +1,28 @@
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #ffffff;
+  /* background-image: url('/path/to/your/background-image.jpg'); */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.heroContent {
+  text-align: center;
+  color: #ffffff;
+}
+
+.heroTitle {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.heroSubtitle {
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 40px;
+}
