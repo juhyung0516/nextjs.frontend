@@ -1,0 +1,7 @@
+.footer {
+  @apply bg-blue-500;
+}
+
+.footer-text {
+  @apply text-white text-center py-4;
+}

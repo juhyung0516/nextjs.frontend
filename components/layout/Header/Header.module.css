@@ -1,0 +1,7 @@
+.header {
+  @apply bg-blue-500;
+}
+
+.logo {
+  @apply text-white text-2xl font-bold;
+}
